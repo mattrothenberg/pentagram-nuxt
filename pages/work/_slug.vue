@@ -31,13 +31,15 @@
 <script>
 import { mapGetters } from "vuex";
 import PageHeader from "@/components/PageHeader";
-import { TweenMax, TimelineLite, Power2 } from "gsap";
+import { TweenMax, TimelineLite, Power4 } from "gsap";
 export default {
   name: "slug",
   transition: {
     css: false,
-    enter(el, done) {
+    beforeEnter(el) {
       TweenMax.set(el.querySelector(".main-content"), { opacity: 0 });
+    },
+    enter(el, done) {
       TweenMax.to(el.querySelector(".main-content"), 0.5, {
         opacity: 1,
         onComplete: done
@@ -58,13 +60,13 @@ export default {
       };
 
       const tl = new TimelineLite({ onComplete: done });
-      tl.to(document.getElementById("next-proj"), 0.25, { opacity: 0 });
-      tl.to(document.getElementById("main"), 0.5, { opacity: 0 });
+      tl.to(document.getElementById("main"), 0.25, { opacity: 0 });
+      tl.to(document.getElementById("next-proj"), 0.25, { opacity: 0 }, 0);
       tl.to(
         document.getElementById("footer"),
-        0.85,
-        { y: footerOffset, ease: Power2.easeOut },
-        0.5
+        1.25,
+        { y: footerOffset, ease: Power4.easeInOut },
+        0.25
       );
     }
   },
@@ -92,7 +94,7 @@ export default {
   font-family: "BLOKK";
   font-size: 2rem;
   color: config("colors.grey");
-  opacity: 0.25;
+  opacity: 0.45;
   line-height: 1.45;
   margin-bottom: 1.5rem;
 }
