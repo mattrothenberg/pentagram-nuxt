@@ -1,8 +1,8 @@
 <template>
   <article>
-    <div class="main" id="main" ref="main">
+    <div id="main">
       <page-header :image="post.image"></page-header>
-      <div class="main-content">
+      <div id="mainContent" class="main-content">
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure omnis odio nostrum. Dolorem deleniti at ullam, officia fuga asperiores. Sequi ipsum fugiat accusamus quisquam fugit illum qui error itaque.</p>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure omnis odio nostrum. Dolorem deleniti at ullam, officia fuga asperiores. Sequi ipsum fugiat accusamus quisquam fugit illum qui error itaque.</p>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure omnis odio nostrum. Dolorem deleniti at ullam, officia fuga asperiores. Sequi ipsum fugiat accusamus quisquam fugit illum qui error itaque.</p>
@@ -19,8 +19,8 @@
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure omnis odio nostrum. Dolorem deleniti at ullam, officia fuga asperiores. Sequi ipsum fugiat accusamus quisquam fugit illum qui error itaque.</p>
       </div>
     </div>
-    <h2 id="next-proj" ref="nextProjHeading" class="font-normal text-red text-md mb-4">Next Project</h2>
-    <footer ref="footer" id="footer">
+    <h2 id="next-proj" class="font-normal text-red text-md mb-4">Next Project</h2>
+    <footer id="footer">
       <nuxt-link :to="upcomingPost.slug" class="no-underline">
         <page-header :image="upcomingPost.image"></page-header>
       </nuxt-link>
@@ -37,10 +37,10 @@ export default {
   transition: {
     css: false,
     beforeEnter(el) {
-      TweenMax.set(el.querySelector(".main-content"), { opacity: 0 });
+      TweenMax.set(document.getElementById("mainContent"), { opacity: 0 });
     },
     enter(el, done) {
-      TweenMax.to(el.querySelector(".main-content"), 0.5, {
+      TweenMax.to(document.getElementById("mainContent"), 0.5, {
         opacity: 1,
         onComplete: done
       });
@@ -54,9 +54,7 @@ export default {
     },
     leave(el, done) {
       const footerOffset = () => {
-        return -document
-          .getElementsByTagName("footer")[0]
-          .getBoundingClientRect().top;
+        return -document.getElementById("footer").getBoundingClientRect().top;
       };
 
       const tl = new TimelineLite({ onComplete: done });
