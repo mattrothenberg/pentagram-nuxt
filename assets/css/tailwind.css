@@ -1,3 +1,15 @@
 @tailwind preflight;
 
+@font-face {
+  font-family: "BLOKK";
+  src: url("../fonts/BLOKKNeue-Regular.woff2") format("woff2"),
+    url("../fonts/BLOKKNeue-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Helvetica Neue";
+}
+
 @tailwind utilities;

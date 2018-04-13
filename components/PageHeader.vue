@@ -1,28 +1,26 @@
 <template>
   <header class="pt-6">
-    <div class="flex mb-8">
+    <div class="flex flex-col md:flex-row mb-8 md:items-center">
       <div class="flex-1">
-        <h1 class="mb-2 text-black">Page Title</h1>
-        <h2 class="text-grey-dark text-xl font-normal">Category</h2>
+        <h1 class="mb-4 text-black font-medium text-5xl">Page Title</h1>
+        <h2 class="text-grey text-xl font-normal">Category</h2>
       </div>
-      <p class="flex-1 text-lg leading-normal text-black">
+      <h2 class="mt-4 md:mt-0 font-medium flex-1 text-2xl leading-tight text-black">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium voluptatibus eum tenetur sapiente tempore
-      </p>
+      </h2>
     </div>
-    <figure class="w-full" :style="computedStyle">
-
-    </figure>
+    <figure class="w-full" :style="computedStyle"></figure>
   </header>
 </template>
 
 <script>
 export default {
   name: "page-header",
-  props: ["color"],
+  props: ["image"],
   computed: {
     computedStyle() {
       return {
-        backgroundColor: this.color
+        backgroundImage: `url(${this.image})`
       };
     }
   }
@@ -31,6 +29,7 @@ export default {
 
 <style scoped>
 figure {
-  height: 400px;
+  height: 700px;
+  background-size: cover;
 }
 </style>

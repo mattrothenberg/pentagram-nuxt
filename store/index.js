@@ -5,15 +5,15 @@ const createStore = () => {
     state: {
       posts: {
         foo: {
-          header: "#55E6C1",
+          image: "https://source.unsplash.com/1400x900/?nature",
           slug: "foo"
         },
         bar: {
-          header: "#1B9CFC",
+          image: "https://source.unsplash.com/1400x900/?water",
           slug: "bar"
         },
         baz: {
-          header: "#D6A2E8",
+          image: "https://source.unsplash.com/1400x900/?tech",
           slug: "baz"
         }
       }

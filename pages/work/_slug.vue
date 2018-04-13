@@ -1,7 +1,7 @@
 <template>
   <article>
-    <div class="main" ref="main">
-      <page-header :color="post.header"></page-header>
+    <div class="main" id="main" ref="main">
+      <page-header :image="post.image"></page-header>
       <div class="main-content">
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure omnis odio nostrum. Dolorem deleniti at ullam, officia fuga asperiores. Sequi ipsum fugiat accusamus quisquam fugit illum qui error itaque.</p>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure omnis odio nostrum. Dolorem deleniti at ullam, officia fuga asperiores. Sequi ipsum fugiat accusamus quisquam fugit illum qui error itaque.</p>
@@ -19,11 +19,11 @@
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure omnis odio nostrum. Dolorem deleniti at ullam, officia fuga asperiores. Sequi ipsum fugiat accusamus quisquam fugit illum qui error itaque.</p>
       </div>
     </div>
-    <h2 ref="nextProjHeading" class="font-normal text-red text-md mb-4">Next Project</h2>
-    <footer ref="footer">
-      <a href="#" @click="handleNavigate" class="no-underline">
-        <page-header :color="upcomingPost.header"></page-header>
-      </a>
+    <h2 id="next-proj" ref="nextProjHeading" class="font-normal text-red text-md mb-4">Next Project</h2>
+    <footer ref="footer" id="footer">
+      <nuxt-link :to="upcomingPost.slug" class="no-underline">
+        <page-header :image="upcomingPost.image"></page-header>
+      </nuxt-link>
     </footer>
   </article>
 </template>
@@ -42,43 +42,34 @@ export default {
         opacity: 1,
         onComplete: done
       });
-    }
-  },
-  components: {
-    PageHeader
-  },
-  methods: {
-    handleNavigate(e) {
-      e.preventDefault();
-      this.fadeOutContent();
     },
-    fadeOutContent() {
+    afterEnter(el) {
       document.body.classList.toggle("transitioning");
-      this.$refs.footer.classList.toggle("animating");
-
+    },
+    beforeLeave(el) {
+      document.body.classList.toggle("transitioning");
+      document.getElementById("footer").classList.toggle("animating");
+    },
+    leave(el, done) {
       const footerOffset = () => {
         return -document
           .getElementsByTagName("footer")[0]
           .getBoundingClientRect().top;
       };
 
-      const cb = () => {
-        this.$router.push(this.upcomingPost.slug);
-        window.scroll(0, 0);
-        document.body.classList.toggle("transitioning");
-        this.$refs.footer.classList.toggle("animating");
-      };
-
-      const tl = new TimelineLite({ onComplete: cb });
-      tl.to(this.$refs.nextProjHeading, 0.25, { opacity: 0 });
-      tl.to(this.$refs.main, 0.5, { opacity: 0 });
+      const tl = new TimelineLite({ onComplete: done });
+      tl.to(document.getElementById("next-proj"), 0.25, { opacity: 0 });
+      tl.to(document.getElementById("main"), 0.5, { opacity: 0 });
       tl.to(
-        this.$refs.footer,
+        document.getElementById("footer"),
         0.85,
         { y: footerOffset, ease: Power2.easeOut },
         0.5
       );
     }
+  },
+  components: {
+    PageHeader
   },
   computed: {
     ...mapGetters(["nextPost", "getPostBySlug"]),
@@ -98,13 +89,16 @@ export default {
 }
 
 .main-content p {
-  font-size: 1.25rem;
+  font-family: "BLOKK";
+  font-size: 2rem;
+  color: config("colors.grey");
+  opacity: 0.25;
   line-height: 1.45;
   margin-bottom: 1.5rem;
 }
 
 footer {
-  max-height: 250px;
+  max-height: 450px;
   overflow: hidden;
 }
 
